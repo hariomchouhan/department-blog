@@ -46,7 +46,7 @@ const getAllStories = asyncErrorWrapper( async (req,res,next) =>{
 
     const paginationResult =await paginateHelper(Story , query ,req)
 
-    query = paginationResult.query  ;
+    query = paginationResult.query;
 
     query = query.sort("-likeCount -commentCount -createdAt")
 
