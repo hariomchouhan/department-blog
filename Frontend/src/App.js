@@ -16,6 +16,9 @@ import ChangePassword from './components/ProfileScreens/ChangePassword';
 import NotFound from './components/GeneralScreens/NotFound';
 import EditStory from './components/StoryScreens/EditStory';
 import ReadListPage from './components/ProfileScreens/ReadListPage';
+import LoginAdminScreen from './components/AuthScreens/LoginAdminScreen';
+import Dashboad from './components/AdminScreens/Dashboad';
+import EditUser from './components/AdminScreens/EditUser';
 
 const App = () => {
 
@@ -70,9 +73,17 @@ const App = () => {
                                           <Route exact path='/readList' element={<ReadListPage />} />
                                     </Route>
 
+                                    <Route exact path='/dashboard' element={<PrivateRoute />}>
+                                          <Route exact path='/dashboard' element={<Dashboad />} />
+                                    </Route>
+                                    <Route exact path='/user/editByAdmin' element={<PrivateRoute />}>
+                                          <Route exact path='/user/editByAdmin' element={<EditUser />} />
+                                    </Route>
+
                               </Route>
 
                               <Route exact path="/login" element={<LoginScreen />} />
+                              <Route exact path="/admin/login" element={<LoginAdminScreen />} />
                               <Route exact path="/register" element={<RegisterScreen />} />
 
                               <Route exact path="/forgotpassword" element={<ForgotPasswordScreen />} />

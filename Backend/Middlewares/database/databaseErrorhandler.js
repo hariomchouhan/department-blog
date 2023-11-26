@@ -1,6 +1,7 @@
 const asyncErrorWrapper = require("express-async-handler")
 const CustomError = require("../../Helpers/error/CustomError");
-const Story = require("../../Models/story")
+const Story = require("../../Models/story");
+const User = require("../../Models/user");
 
 
 const checkStoryExist = asyncErrorWrapper(async (req,res,next) => {
@@ -11,6 +12,21 @@ const checkStoryExist = asyncErrorWrapper(async (req,res,next) => {
     })
 
     if(!story) {
+        return next(new CustomError("There is no such story with that slug ",400))
+    }
+
+    next() ; 
+
+})
+
+const checkUserExist = asyncErrorWrapper(async (req,res,next) => {
+  
+    const {_id} = req.body  ;
+    const user = await User.findOne({
+      _id : _id
+    })
+
+    if(!user) {
         return next(new CustomError("There is no such story with that slug ",400))
     }
 
@@ -38,5 +54,6 @@ const checkUserAndStoryExist = asyncErrorWrapper(async(req, res, next) => {
 
 module.exports ={
     checkStoryExist,
+    checkUserExist,
     checkUserAndStoryExist
 }

@@ -8,6 +8,14 @@ const validateUserInput =(email,password) =>{
 
 }
 
+const validateUserInputForUpdate =( newPassword) =>{
+
+    return(
+        newPassword
+    )
+
+}
+
 const comparePassword =  (password , hashedPassword) =>{
 
     return  bycrpt.compareSync(password,hashedPassword)
@@ -16,5 +24,6 @@ const comparePassword =  (password , hashedPassword) =>{
 
 module.exports ={
     validateUserInput,
+    validateUserInputForUpdate,
     comparePassword
 }

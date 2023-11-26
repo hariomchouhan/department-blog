@@ -1,7 +1,7 @@
 const asyncErrorWrapper = require("express-async-handler")
 const Story = require("../Models/story");
 const CustomError = require("../Helpers/error/CustomError");
-const { comparePassword, validateUserInput } = require("../Helpers/input/inputHelpers");
+const { comparePassword, validateUserInput, validateUserInputForUpdate } = require("../Helpers/input/inputHelpers");
 const Admin = require("../Models/admin");
 const User = require("../Models/user");
 const { searchHelper, paginateHelper } = require("../Helpers/query/queryHelpers");
@@ -149,17 +149,25 @@ const getAllUsers = asyncErrorWrapper( async (req,res,next) =>{
 })
 
 const updateUserByAdmin = asyncErrorWrapper( async (req,res,next) =>{
-    const { _id, newPassword } = req.body
+    const {_id, newPassword, active } = req.body;
+    
+    if(!newPassword === ""){
 
-    if (!validateUserInput(newPassword)) {
-
-        return next(new CustomError("Please check your inputs ", 400))
-
+        if (!validateUserInputForUpdate(newPassword)) {
+            
+            return next(new CustomError("Please check your inputs ", 400))
+            
+        }
+        
     }
 
-    const user = await User.findById(_id).select("+password")
+    const user = await User.findById(_id).select('+password')
 
-    user.password = newPassword
+
+        user.active = active
+    if(!newPassword === "") {
+        user.password = newPassword
+    }
 
     await user.save() ; 
 
