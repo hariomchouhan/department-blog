@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "../../Css/Dashboard.css";
-// import AdminTopScreen from './AdminTopScreen';
 import { AuthContext } from "../../Context/AuthContext";
-// import { useNavigate, useParams } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { FiEdit } from "react-icons/fi";
 import { Link } from "react-router-dom";
@@ -18,7 +17,7 @@ const Dashboad = () => {
         setLoading(true);
         const { data } = await axios.get(`/admin/getAllUsers`, config);
         const dataFinal = data.data;
-        console.log(dataFinal);
+        // console.log(dataFinal);
         // console.log(dataFinal._id);
         setUserData(dataFinal);
         setLoading(false);
@@ -31,59 +30,62 @@ const Dashboad = () => {
 
   // console.log(setUserData);
   return (
-    <div style={{ minWidth: "850px", width: "1050px", margin: "auto" }}>
+    <div style={{ overflowX: "auto", maxWidth: "1050px", margin: "auto" }}>
       {loading ? (
         "Loading..."
       ) : (
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          {/* <AdminTopScreen /> */}
-          <div
-            style={{
+       
+          <table
+             style={{
+              minWidth: "980px",
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <tr style={{
               width: "100%",
               display: "flex",
               marginBottom: "1.5rem",
               justifyContent: "space-between",
               fontWeight: 600,
               fontSize: "1.09rem",
-            }}
-          >
+            }}>
             <div>Username</div>
             <div>Email</div>
-            <div>Password</div>
+            <div>Active</div>
             <div>Edit</div>
-          </div>
+            </tr>
+          
 
           {userData?.map((item) => {
             console.log(item);
             return (
-              <div
+              <tr
                 key={item._id}
                 style={{
                   width: "100%",
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
+                  borderBottom: "2px solid gray",
                 }}
               >
-                <p>{item.username}</p>
-                <p>{item.email}</p>
-                <p>{item.active.toString()}</p>
+                <td style={{ display: "flex", justifyContent: "flex-start", alignItems: "center", width: "120px", marginBottom: "20px", marginTop: "20px"}}>{item.username}</td>
+                <td style={{ display: "flex", justifyContent: "flex-start", alignItems: "center", width: "120px"}}>{item.email}</td>
+                <td style={{ display: "flex", justifyContent: "flex-start", alignItems: "center", width: "40px"}}>{item.active.toString()}</td>
+                <td>
                 <button>
                 <Link className='editStoryLink' to={`/user/editByAdmin?id=${item._id}&active=${item.active}`} >
                        Edit <FiEdit />
                       </Link></button>
-              </div>
+                      </td>
+              </tr>
             );
           })}
-        </div>
+     </table>
       )}
     </div>
   );

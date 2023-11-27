@@ -64,11 +64,12 @@ const EditUser = () => {
     }
   };
   return (
-    <div>
-      <div>
-        <button onClick={() => navigate(-1)}>Back</button>
-        <form action="" onSubmit={submitHandler}>
-          <label htmlFor="password">New Password</label>
+    <div style={{ maxWidth: "1050px", margin: "auto" }}>
+      <div style={{display: "flex", flexDirection: "column"}}>
+        <button onClick={() => navigate(-1)} style={{width: "70px", border: "none", borderRadius: "20px", margin: "2rem 0"}}>Back</button>
+
+        <form action="" onSubmit={submitHandler} style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", margin: "0 auto", gap: "2rem"}}>
+          <label htmlFor="password" style={{display: "flex", gap:"1rem", fontWeight: "bold"}}>New Password
           <input
             type="text"
             placeholder="6+ strong character"
@@ -77,20 +78,22 @@ const EditUser = () => {
             value={formData.newPassword}
             onChange={changeHandler}
           />
-
+          </label>
+          
+          <label htmlFor="active" style={{display: "flex", gap:"1rem", fontWeight: "bold"}}>
           <input
             type="checkbox"
             name="active"
-            id="Candidates"
+            id="active"
             className="h-4 w-4 rounded"
             onChange={changeHandler}
             checked={formData.active}
           />
-          <label htmlFor="active" className="font-medium text-gray-900">
+        
             {formData.active === true ? "Active" : "Deactive"}
           </label>
 
-          <button>Update User</button>
+          <button style={{ padding: "0.5rem 1rem", border: "none", borderRadius: "20px", marginBottom: "2rem"}}>Update User</button>
         </form>
       </div>
     </div>
